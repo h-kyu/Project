@@ -1,0 +1,27 @@
+{% extends 'landmark/base.html' %}
+{% block title %}로그인{% endblock title %}
+{% block headline %}로그인{% endblock headline %}
+{% block content %}
+<div class="d-grid gap-2 col-4 mx-auto">
+  <form method="post" action="{% url 'landmark:login' %}">
+    {% csrf_token %}
+    {% include 'landmark/form_errors.html' %}
+    <div class="form-floating">
+      <input type="text" class="form-control" name="username" id="username">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" name="password" id="floatingPassword" >
+      <label for="floatingPassword">Password</label>
+    </div>
+    <br>
+    <div class="d-flex">
+      <button class="btn btn-outline-primary flex-grow-1 me-2" type="submit">Sign in</button>
+      <button class="btn btn-outline-warning flex-grow-1" onclick="location.href='{% url 'landmark:signup' %}'" type="button">Sign up</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+
+

@@ -1,0 +1,10 @@
+{% extends 'landmark/base.html' %}
+{% block title %}오류{% endblock title %}
+{% block headline %}오류 페이지{% endblock headline %}
+{% block content %}
+    <p style="text-align:center">사진이 정확하지 않아 다시 진행 부탁 드립니다</p>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn-success" type="button"><a href="{% url 'landmark:upload' %}">파일 올리기</a></button>
+        <button class="btn-success" type="button"><a href="{% url 'landmark:list' user.id %}">파일 목록 보기</a></button>
+    </div>
+{% endblock %}

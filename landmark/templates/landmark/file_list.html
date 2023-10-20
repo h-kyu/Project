@@ -1,0 +1,58 @@
+{% extends 'landmark/base.html' %}
+{% block title %}목록{% endblock title %}
+{% block headline %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">올린 사진 목록</h1><br>
+        <p class="lead text-body-secondary">다시 한번 확인 하고 싶으면 <strong>'View'</strong>를 클릭하시고, 삭제하고 싶으시면 <strong>'Delete'</strong>를 클릭하세요!</p>
+        <p>
+          <a href="{% url 'landmark:upload' %}" class="btn btn-primary my-2">New file upload</a>
+        </p>
+      </div>
+    </div>
+</section>
+{% endblock headline %}
+{% block content %}
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for data in zipped_data_list %}
+                {% with file=data.0 name=data.1  %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="/media/{{ file.imgfile }}" class="rounded" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <div class="card-body">
+                                <p class="card-text">{{ name }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'landmark:info' file.id %}'">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="confirmAndDelete('{% url 'landmark:delete' file.id %}')">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                        </div><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% endif %}
+                    <script>
+                        function confirmAndDelete(url) {
+                            if (confirm('정말 삭제하시겠습니까?')) {
+                                window.location.href = url;
+                            }
+                        }
+                    </script>
+                {% endwith %}
+                {% endfor %} 
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <div class="d-grid gap-2 col-4 mx-auto">
+    <button type="button" class="btn btn-info"><a href="{% url 'landmark:index' %}">처음으로</a></button>
+    </div>
+    <br><br><br>
+
+{% endblock %}
+

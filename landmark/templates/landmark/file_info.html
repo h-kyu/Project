@@ -1,0 +1,85 @@
+{% extends 'landmark/base.html' %}
+{% block title %}목록{% endblock title %}
+{% block headline %}랜드마크 정보{% endblock headline %}
+{% block content %}
+
+<table class="table">
+    <tbody class="table-group-divider">
+        <center>
+        <img src="/media/landmark_pic/{{ landmark_pic }}" width="500px" height="500px">            
+        </center><br><br>
+        <tr>
+            <th>이름:</th>
+            <td class="text-center">{{ name }}</a></td>
+        </tr>
+        <tr>
+            <th>랜드마크 정보:</th>
+            <td class="text-center">{{ info }}</a></td>
+        </tr> 
+        <tr>
+            <th>영업시간:</th>
+            <td class="text-center">{{ time }}</a></td>
+        </tr> 
+        <tr>
+            <th>주소:</th>
+            <td class="text-center">{{ address }}</a></td>
+        </tr>  
+</table>
+<br><br><br><br>
+{% if address %}
+<div id="map" style="width: 100%; height: 500px;"></div>
+<script>
+    function initMap() {
+        var address = "{{ address }}";  // 주소 정보 가져오기
+        var geocoder = new google.maps.Geocoder();
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: { lat: -34.397, lng: 150.644 }
+        });
+
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status === 'OK') {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+            } else {
+                alert('지도 표시 실패: ' + status);
+            }
+        });
+    }
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo7u-G5rdbOCw7ugI7aug7WgrMczAf9m0&callback=initMap">
+</script>
+{% endif %}
+<br><br>
+<div style="text-align : center;">
+<h4>주변 호텔 정보</h4>
+<form action="{% url 'landmark:result' file.id %}" method="post">
+    {% csrf_token %}
+    가격대
+    <select name="price">
+        <option value="높음">높음</option>
+        <option value="중간">중간</option>
+        <option value="낮음">낮음</option>
+    </select><br><br><br>
+    호텔 등급    
+    <select name="star">
+        <option value="높음">4성,5성</option>
+        <option value="중간">3성</option>
+        <option value="낮음">1성,2성</option>
+    </select><br><br><br>
+
+    <input type="submit" value="알아보기">
+    {% comment %} <input type="reset"> {% endcomment %}
+    </form>
+</div>
+<br><br><br>
+{% comment %} <a href="{% url 'landmark:index' %}">처음으로</a>  {% endcomment %}
+<div class="d-grid gap-2 col-4 mx-auto">
+    <button type="button" class="btn btn-info"><a href="{% url 'landmark:index' %}">처음으로</a></button>
+</div>
+<br><br><br>
+{% endblock %}

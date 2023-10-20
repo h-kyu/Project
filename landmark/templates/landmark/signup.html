@@ -1,0 +1,28 @@
+{% extends 'landmark/base.html' %}
+{% block title %}회원가입{% endblock title %}
+{% block headline %}회원가입{% endblock headline %}
+{% block content %}
+<div class="d-grid gap-2 col-4 mx-auto">
+    <form method = "POST" action="{% url 'landmark:signup'%}">
+        {% csrf_token %}
+        {% include 'landmark/form_errors.html' %}
+        <div class="form-floating">
+            <input type="text" class="form-control" name="username" id="username">
+            <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name="password1" id="floatingPassword" >
+            <label for="floatingPassword">Password</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name="password2" id="floatingPassword" >
+            <label for="floatingPassword">Confirm Password</label>
+        </div>
+        <br>
+        <div class="d-flex">
+            <button class="btn btn-outline-primary flex-grow-1 me-2" type="submit">Sign up</button>
+            <button class="btn btn-outline-warning flex-grow-1" onclick="location.href='{% url 'landmark:login' %}'" type="button">Log in</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'landmark/base.html' %}
+{% block title %}목록{% endblock title %}
+{% block headline %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light"><strong>어디가 궁금하십니까?</strong></h1><br>
+        <p class="lead text-body-secondary">
+            궁금하신 랜드마크 사진을 올리고 싶으시면 <strong>'파일 올리기'</strong>를, 
+            지금까지 올린 사진 목록을 보고 싶으시면 <strong>'파일 목록 보기'</strong>를 클릭하세요!
+        </p>
+      </div>
+    </div>
+</section>
+{% endblock headline %}
+{% block content %}
+<div class="d-flex justify-content-center">
+    <div class="text-center" style="position: relative; margin: 0 10px;">
+        <div style="position: relative;">
+            <a href="{% url 'landmark:upload' %}"><img src="/media/pyramid.gif" class="rounded" style="width: 600px; height: 650px;"></a>
+            <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: bold; color: white; background-color: rgba(0, 0, 0, 0.7); padding: 10px;">
+                파일 올리기
+            </p>
+        </div>
+    </div>
+    <div class="text-center" style="position: relative; margin: 0 10px;">
+        <div style="position: relative;">
+            <a href="{% url 'landmark:list' user.id %}"><img src="/media/gasun.gif" class="rounded" style="width: 600px; height: 650px;"></a>
+            <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: bold; color: white; background-color: rgba(0, 0, 0, 0.7); padding: 10px;">
+                파일 목록 보기
+            </p>
+        </div>
+    </div>
+</div>
+{% comment %} <br><br><br>
+<footer class="pt-5 my-5 text-body-secondary border-top">
+    <p align ="center">Created by the MoonGueJo team &middot; &copy; 2023</p>
+</footer> {% endcomment %}
+{% endblock  %}
